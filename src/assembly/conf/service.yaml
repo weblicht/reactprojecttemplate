@@ -1,0 +1,11 @@
+server:
+  applicationContextPath: ${APP_CONTEXT_PATH!'/reactprojecttemplate'}
+
+  applicationConnectors:
+    - type: http
+      port: ${APP_PORT!8080}
+      # time before the request expires
+      idleTimeout: 180 seconds
+  adminConnectors:
+    - type: http
+      port: ${ADMIN_PORT!8089}

@@ -1,0 +1,10 @@
+version: '2'
+services:
+  tundra:
+    image: weblicht.sfs.uni-tuebingen.de:5000/clarind/misc/reactprojecttemplate
+    ports:
+      - "8989:8080"
+    labels:
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+
