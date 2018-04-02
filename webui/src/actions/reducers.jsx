@@ -13,10 +13,27 @@ function apiinfo(state = SI({}), action) {
     }
 }
 
-function jobs(state = SI({}), action) {
+function jobs(state = SI([]), action) {
     switch (action.type) {
         case actionType.JOB_SUBMITTED:
-            return SI.set(state, action.job.id, SI(action.job));
+        case actionType.JOB_DONE: {
+            let mutable = state.asMutable();
+            let index = mutable.findIndex(j => j.id == action.job.id);
+            if (index >= 0) {
+                mutable[index] = action.job;
+            } else {
+                mutable.push(action.job);
+            }
+            return SI(mutable);
+        }
+        case actionType.JOB_REMOVE: {
+            let mutable = state.asMutable();
+            let index = mutable.findIndex(j => j.id == action.job.id);
+            if (index >= 0) {
+                mutable.splice(index, 1);
+            }
+            return SI(mutable);
+        }
         default:
             return state;
     }
@@ -25,7 +42,9 @@ function jobs(state = SI({}), action) {
 function alerts(state = SI([]), action) {
     switch (action.type) {
         case actionType.ERROR:
-            return SI.push(state, action.message);
+            let mutable = state.asMutable();
+            mutable.push(action.message);
+            return SI(mutable);
         default:
             return state;
     }

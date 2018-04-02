@@ -10,10 +10,8 @@ import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.server.session.SessionHandler;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.slf4j.LoggerFactory;
-
-import java.net.URL;
-import java.net.URLClassLoader;
 
 
 public class Application extends io.dropwizard.Application<Configuration> {
@@ -21,13 +19,6 @@ public class Application extends io.dropwizard.Application<Configuration> {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) throws Exception {
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-        URL[] urls = ((URLClassLoader)cl).getURLs();
-        System.out.println("classpath:");
-        for(URL url: urls){
-            System.out.println("\t"+url.getFile());
-        }
-
        new Application().run(args);
     }
 
@@ -39,6 +30,7 @@ public class Application extends io.dropwizard.Application<Configuration> {
         env.jersey().setUrlPattern("/api/*");
 
         Splitter splitter = new Splitter();
+        env.jersey().register(MultiPartFeature.class);
         env.jersey().register(new API(splitter));
 
         env.healthChecks().register("reactprojecttemplate", new AppHealthCheck(splitter));

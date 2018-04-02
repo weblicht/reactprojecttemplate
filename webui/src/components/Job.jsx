@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Grid, Panel, Table, Button, Glyphicon, Modal, OverlayTrigger } from 'react-bootstrap';
+import { Well, Label, Button } from 'react-bootstrap';
 import moment from 'moment';
 
 import { toPairs } from '../utils/utils';
@@ -12,19 +12,38 @@ export class Job extends React.Component {
         super(props);
     }
 
-    render() {
+    renderNotFound() {
         return (
             <div>
-                <h1>Job {this.props.job.id}</h1>
-                <h3>Original text</h3>
-                <p>{this.props.job.originalText}</p>
-                <h3>Tokenized text</h3>
-                <p>{this.props.job.tokenizedText}</p>
+                <h1>Job ?</h1>
+                <p>Job not found</p>
+            </div>
+        );
+    }
+
+    render() {
+        const {id} = this.props.params || {};
+        if (!this.props.jobs || !id) {
+            return this.renderNotFound();
+        }
+
+        const job = this.props.jobs.find(j => j.id == id);
+        if (!job) {
+            return this.renderNotFound();
+        }
+
+        return (
+            <div>
+                <h1>Job {job.id}</h1>
+                <p>Original text: {job.originalText}</p>
+                <p>Tokenized:</p>
+                <pre><code>{job.tokenizedText}</code></pre>
+                <Label bsStyle={job.status == "done" ? "success" : "danger"}>{job.status}</Label>
             </div>
         );
     }
 }
 
 Job.propTypes = {
-    jobs: PropTypes.object,
+    jobs: PropTypes.array,
 };

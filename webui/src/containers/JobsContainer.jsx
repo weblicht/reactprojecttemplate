@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {fetchJobs} from '../actions/actions';
+import {createJob} from '../actions/actions';
 import {BrowseJobs} from '../components/BrowseJobs';
 import {CreateJob} from '../components/CreateJob';
 import {Job} from '../components/Job';
@@ -7,7 +7,7 @@ import {Job} from '../components/Job';
 const mapStateToProps = (state) => ({jobs: state.jobs});
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchJobs: () => dispatch(fetchJobs()),
+    createJob: (text) => dispatch(createJob(text)),
 });
 
 export const BrowseJobsContainer = connect(mapStateToProps, mapDispatchToProps)(BrowseJobs);

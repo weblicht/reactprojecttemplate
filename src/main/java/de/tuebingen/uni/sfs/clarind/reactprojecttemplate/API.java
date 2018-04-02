@@ -3,6 +3,7 @@ package de.tuebingen.uni.sfs.clarind.reactprojecttemplate;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.tuebingen.uni.sfs.clarind.reactprojecttemplate.core.Splitter;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
@@ -20,7 +21,7 @@ public class API {
 
     private Splitter splitter;
 
-    public API(Splitter engine) {
+    public API(Splitter splitter) {
         this.splitter = splitter;
     }
 
@@ -35,26 +36,16 @@ public class API {
 
     @POST
     @Path("/split")
-    @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response split(String inputString) {
+    public Response split(@FormDataParam("text") String text) {
         try {
-            JobInput in = gson.fromJson(inputString, JobInput.class);
-            String[] tokens = splitter.split(in.data);
-            JobOutput out = new JobOutput();
-            out.data = tokens;
-            return Response.ok(out).build();
+            String[] tokens = splitter.split(text);
+            Thread.sleep(10*1000);
+            return Response.ok(tokens).build();
         } catch (Exception ex) {
             log.error("exception: ", ex);
             return Response.serverError().build();
         }
-    }
-
-    class JobInput {
-        String data;
-    }
-
-    class JobOutput {
-        String[] data;
     }
 }

@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import { apiPath, actionType } from '../constants';
 import { toPairs } from '../utils/utils';
 
+let JOBID = 1;
 
 export function fetchApiInfo() {
     return function (dispatch, getState) {
@@ -15,50 +16,43 @@ export function fetchApiInfo() {
     }
 }
 
-export function fetchJobs() {
+export function createJob(text) {
     return function (dispatch, getState)  {
+        const fd = new FormData(); fd.append("text", text);
+        const job = {
+            id: JOBID++,
+            originalText: text,
+            tokenizedText: null,
+            status: 'in progress',
+        };
+
+        dispatch({
+            type: actionType.JOB_SUBMITTED,
+            job: job,
+        });
+
         axios
-        .get(apiPath.jobs)
+        .post(apiPath.split, fd)
         .then(response => {
+            job.tokenizedText = response.data;
+            job.status = 'done';
             dispatch({
-                type: actionType.JOB_LIST_FETCH_SUCCESS,
-                jobs: response.data.jobs
+                type: actionType.JOB_DONE,
+                job: job,
             });
         })
-        .catch(errHandler(dispatch, "Cannot fetch jobs."));
+        .catch(errHandler(dispatch, "Cannot create job."));
     }
 }
 
 export function removeJobs(jobIDList) {
     return function (dispatch, getState)  {
         for (id in jobIDList) {
-            axios
-            .delete(apiPath.job(jobIDList[i]))
-            .then(response => {
-                dispatch({
-                    type: actionType.JOB_REMOVAL_SUCCESS,
-                    id: id,
-                });
-                dispatch(fetchJobs());
-            }).catch(errHandler(dispatch, "Cannot remove job."));
+            dispatch({
+                type: actionType.JOB_REMOVE,
+                id: id,
+            });
         }
-    }
-}
-
-
-export function handleSubmitJob() {
-    return function (dispatch, getState) {
-        const jobBuilder = getState().form.JobBuilder;
-        const fd = new FormData();
-        for (kv in toPairs(jobBuilder.values)) {
-            fd.append(kv[0], kv[1])
-        }
-        axios
-        .post(apiPath.jobs, fd)
-        .then(response => {
-            dispatch(push('/jobs' + '/' + response.data.jobID));
-        })
-        .catch(errHandler(dispatch, "Cannot create job."));
     }
 }
 

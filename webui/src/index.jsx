@@ -29,8 +29,7 @@ const middleware = compose(
 const store = createStore(rootReducers, middleware);
 const history = syncHistoryWithStore(browserHistory, store);
 
-// TODO: show alerts
-// TODO: make sure there are forms
+// TODO: show alerts when backend fails
 
 class App extends React.Component {
     constructor(props) {
@@ -45,7 +44,8 @@ class App extends React.Component {
                     <Router history={history}>
                         <Route path='/' component={Frame}>
                             <IndexRoute component={HomeContainer}/>
-                            <Route path='jobs' component={BrowseJobsContainer} >
+                            <Route path='jobs'>
+                                <IndexRoute component={BrowseJobsContainer} />
                                 <Route path='new' component={CreateJobContainer}  />
                                 <Route path=':id' component={JobContainer}  />
                             </Route>
