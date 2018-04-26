@@ -24,7 +24,7 @@ const middleware = compose(
     applyMiddleware(thunkMiddleware,
                     routerMiddleware(browserHistory),
                     createLogger()),
-    window.devToolsExtension || (f=>f)
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 const store = createStore(rootReducers, middleware);
 const history = syncHistoryWithStore(browserHistory, store);
