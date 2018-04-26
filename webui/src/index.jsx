@@ -19,12 +19,14 @@ import {BrowseJobsContainer, CreateJobContainer, JobContainer} from './container
 import {HomeContainer} from './containers/HomeContainer';
 import {FooterContainer} from './containers/FooterContainer';
 
+const devTools = (window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+    || (f => f);
 
 const middleware = compose(
     applyMiddleware(thunkMiddleware,
                     routerMiddleware(browserHistory),
                     createLogger()),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    devTools
 );
 const store = createStore(rootReducers, middleware);
 const history = syncHistoryWithStore(browserHistory, store);
