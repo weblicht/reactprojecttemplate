@@ -16,15 +16,23 @@ module.exports = {
             {   test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
-                query: { presets: ['es2015', 'react'] },
                 include: path.join(__dirname, 'src')
             },
             {
                 test: /\.css$/,
-                loader: 'style!css'
+                use: ['style-loader', 'css-loader']
             }
-
         ]
     },
-    mode: 'production',
+    devServer: {
+        contentBase: __dirname+"/../src/main/resources/webui",
+        historyApiFallback: true,
+        proxy: {
+            '/api/**': {
+                target :'http://localhost:8088',
+                changeOrigin: true,
+                secure: false
+            }
+        }
+    }
 };
