@@ -23,10 +23,7 @@ To start a custom project based on this template:
 
 To build and develop the application:
 
-1. start webpack in development watch mode, which will rebuild the UI every time a file is saved on the disk. This command has to run in a separate terminal, as it will never return by itself (needs to be interrupted manually):
-   $ make webui
-If you want to build the UI for production (without watch mode), run:
-   $ make webui-production
+1. start webpack in development watch mode, which will rebuild the UI every time a file is saved on the disk. This command has to run in a separate terminal, as it will never return by itself (needs to be interrupted manually): `$ make webui`. If you want to build the UI for production (without watch mode), run: `$ make webui-production`
 
 2. start the backend java application, either from your favourite IDE or from the command line:
    $ make run
