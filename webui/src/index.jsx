@@ -1,35 +1,30 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import {render} from 'react-dom';
-import {compose, applyMiddleware, createStore} from 'redux';
-import {createLogger} from 'redux-logger';
+import { render } from 'react-dom';
+import { compose, applyMiddleware, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-import {Provider, connect} from 'react-redux';
-import {Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
-import {syncHistoryWithStore, routerMiddleware} from 'react-router-redux'
-import {LinkContainer} from 'react-router-bootstrap';
-import {Navbar, Nav, NavDropdown, NavItem, MenuItem } from 'react-bootstrap';
-import {Grid, Row, Col, Alert, Well} from 'react-bootstrap';
-import {ListGroup, ListGroupItem} from 'react-bootstrap';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import rootReducers from './actions/reducers';
-import {fetchApiInfo} from './actions/actions';
+import { fetchApiInfo } from './actions/actions';
 
-import {BrowseJobsContainer, CreateJobContainer, JobContainer} from './containers/JobsContainer';
-import {HomeContainer} from './containers/HomeContainer';
-import {FooterContainer} from './containers/FooterContainer';
+import { BrowseJobs } from './containers/BrowseJobs';
+import { Job } from './containers/Job';
+import { CreateJob } from  './containers/CreateJob';
+import { HomeContainer } from './containers/HomeContainer';
+import { FooterContainer } from './containers/FooterContainer';
+import { Frame } from './components/Frame';
 
 const devTools = (window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
     || (f => f);
 
 const middleware = compose(
     applyMiddleware(thunkMiddleware,
-                    routerMiddleware(browserHistory),
-                    createLogger()),
+        createLogger()),
     devTools
 );
 const store = createStore(rootReducers, middleware);
-const history = syncHistoryWithStore(browserHistory, store);
 
 // TODO: show alerts when backend fails
 
@@ -38,67 +33,27 @@ class App extends React.Component {
         super(props);
         store.dispatch(fetchApiInfo());
     }
-
+ 
     render() {
         return (
             <Provider store={store}>
-                <div style={{paddingBottom: 70, paddingTop:50}}>
-                    <Router history={history}>
-                        <Route path='/' component={Frame}>
-                            <IndexRoute component={HomeContainer}/>
-                            <Route path='jobs'>
-                                <IndexRoute component={BrowseJobsContainer} />
-                                <Route path='new' component={CreateJobContainer}  />
-                                <Route path=':id' component={JobContainer}  />
-                            </Route>
+                <Router>
+                    <div style={{ paddingBottom: 70, paddingTop: 5 }}>
+                        <Route path='/' component={Frame} />
+                        <Switch>
+                            <Route exact path='/jobs' component={BrowseJobs} />
+                            <Route exact path='/jobs/new' component={CreateJob} />
+                            <Route exact path='/jobs/:id' component={Job} />
+                            <Route exact path='/' component={HomeContainer} />
                             <Route path='*' component={NotFound} />
-                        </Route>
-                    </Router>
-                    <FooterContainer />
-                </div>
+                        </Switch>
+                    </div>
+                </Router>
+                <FooterContainer />
             </Provider>
         );
     }
 }
-
-const Frame = (props) => (
-    <Grid fluid={true}>
-        <Row>
-        <Navbar fixedTop={true} fluid={true} collapseOnSelect>
-            <Navbar.Header>
-                <LinkContainer to={'/'}>
-                    <Navbar.Brand> reactprojecttemplate </Navbar.Brand>
-                </LinkContainer>
-                <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-                <Nav>
-                    <LinkContainer to={'/jobs'}>
-                        <NavItem> Jobs </NavItem>
-                    </LinkContainer>
-                </Nav>
-                <Nav pullRight>
-                    <NavDropdown eventKey={3} title="Help" id="basic-nav-dropdown">
-                        <MenuItem eventKey={3.1}>Action</MenuItem>
-                        <MenuItem eventKey={3.2}>Another action</MenuItem>
-                        <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                        <MenuItem divider />
-                        <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                    </NavDropdown>
-                </Nav>
-            </Navbar.Collapse>
-        </Navbar>
-        </Row>
-
-        <Row>
-            <Col xs={12} sm={12} md={1}/>
-            <Col xs={12} sm={12} md={10}>
-                {props.children}
-            </Col>
-        </Row>
-    </Grid>
-);
-
 
 const NotFound = () => (
     <div>This page is not found!</div>

@@ -1,7 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Grid, Row, Col} from 'react-bootstrap'
-
 
 export const Home = () => (
         <div>

@@ -1,7 +1,5 @@
 import SI from 'seamless-immutable';
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
-import { routerReducer } from 'react-router-redux';
 import { actionType } from '../constants';
 
 function apiinfo(state = SI({}), action) {
@@ -53,9 +51,7 @@ function alerts(state = SI([]), action) {
 const rootReducer = combineReducers({
     apiinfo,
     jobs,
-    alerts,
-    form: formReducer,
-    routing: routerReducer
+    alerts
 });
 
 export default rootReducer;
