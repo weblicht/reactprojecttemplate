@@ -41,13 +41,9 @@ class BrowseJobsComp extends React.Component {
 
 const mapStateToProps = (state) => ({jobs: state.jobs});
 
-const mapDispatchToProps = (dispatch) => ({
-    createJob: (text) => dispatch(createJob(text)),
-});
-
 BrowseJobsComp.propTypes = {
     jobs: PropTypes.array, // can be null
 };
 
-export const BrowseJobs = connect(mapStateToProps, mapDispatchToProps)(BrowseJobsComp);
+export const BrowseJobs = connect(mapStateToProps)(BrowseJobsComp);
 

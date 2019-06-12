@@ -68,9 +68,5 @@ JobComp.propTypes = {
 
 const mapStateToProps = (state) => ({jobs: state.jobs});
 
-const mapDispatchToProps = (dispatch) => ({
-    createJob: (text) => dispatch(createJob(text)),
-});
-
-export const Job = withRouter(connect(mapStateToProps, mapDispatchToProps)(JobComp));
+export const Job = withRouter(connect(mapStateToProps)(JobComp));
 
