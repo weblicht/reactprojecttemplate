@@ -34,7 +34,7 @@ export class Frame extends React.Component {
         const navCollapseClass = this.state.showCollapsedNavbar ? "collapse navbar-collapse text-right show" : "collapse navbar-collapse";
         
         return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light">
                 <Link className="navbar-brand" to='/'>ReactProject</Link>
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse" 
