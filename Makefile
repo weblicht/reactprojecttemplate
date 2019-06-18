@@ -7,7 +7,7 @@ webui-production:
 	(cd webui && node_modules/webpack/bin/webpack.js --mode production -p)
 
 dependencies: clean
-	(cd webui && rm -f package-lock.json && npm install)
+	(cd webui && npm install)
 
 clean:
 	rm -rf webui/node_modules
