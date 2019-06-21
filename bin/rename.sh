@@ -19,7 +19,7 @@ fi
 
 # replace the old project name inside project files
 echo "Replacing all instances of $OLDNAME with $NEWNAME inside project files..."
-for F in $(grep --exclude 'Makefile' --exclude '.git/*' --exclude "$0" -ir "$OLDNAME" --files-with-matches .)
+for F in $(grep --exclude 'Makefile' --exclude '.git*' --exclude "$0" -ir "$OLDNAME" --files-with-matches .)
 do         
     echo "in: $F"
     sed -e "s/$OLDNAME/$NEWNAME/g" -i'~~' "$F" 
