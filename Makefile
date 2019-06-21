@@ -1,5 +1,11 @@
 WEBUIAPP=src/main/resources/webui
 
+# customize this variable before running make init:
+PROJECTNAME=reactprojecttemplate
+
+init:
+	./bin/rename.sh $(PROJECTNAME)
+
 webui:
 	(cd webui && node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development -d --hot --https)
 
