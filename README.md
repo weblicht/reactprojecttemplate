@@ -7,17 +7,21 @@ To start a custom project based on this template:
 
 1. clone this repository and change its name to match your project's name
 
-2. remove the `.git` folder inside it and run `git init` to declare a new git project
+2. open the Makefile and set the `PROJECTNAME` variable to your
+   project's name
 
-3. find all file/folders named "reactprojecttemplate" and rename them accordingly:
-   `$ find . -iname '*reactprojecttemplate*'`
+3. run `make init` from the project's root to initialize the project
+   files with your project's name
 
-4. find all strings in the project containing "reactprojecttemplate" and rename them accordingly:
-   `$ grep -ir 'reactprojecttemplate' .`
+   **Warning**: the script to initialize the project directory with a
+   new project name is **very destructive** (it renames files,
+   modifies file contents, and deletes the .git directory, which means
+   you will not be able to recover your previous state).  Do *not* run
+   `make init` or `bin/rename.sh` unless you are sure you have no
+   local git history that you wish to save.
 
-5. install web UI dependencies; a local `Node.js` installation is expected.
-   `$ make dependencies`
-
+4. run `make dependencies` to install web UI dependences; a local
+   `Node.js` installation is expected
 
 ## Development
 
