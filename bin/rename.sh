@@ -3,9 +3,6 @@
 NEWNAME=$1 # TODO: use $PWD by default?
 OLDNAME="reactprojecttemplate"
 
-# TODO: safety check: this script should ONLY be used to rename files
-# from the top of a directory tree based on the reactprojecttemplate
-
 # TODO: check quoting conventions. God help you if you try to run this
 # script from a tree that has spaces in filenames.
 
@@ -16,6 +13,12 @@ then
     exit 1
 fi
 
+# safety check
+read -p "WARNING: this will erase the git history and change files in ${PWD}. Are you sure? " -n 1 -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1
+fi
 
 # replace the old project name inside project files
 echo "Replacing all instances of $OLDNAME with $NEWNAME inside project files..."
