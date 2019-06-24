@@ -39,12 +39,16 @@ do
 done
 echo "Renaming project files completed"
 
-# remove the template's git directory:
-echo "Removing old .git directory"
-rm -rf .git 
+# replace the template's git directory:
+if [[ "${NEWNAME}" == "${OLDNAME}" ]]
+then
+    echo "Project name has not changed; will not modify .git directory"
+else
+    echo "Removing old .git directory"
+    rm -rf .git 
 
-# create a new git directory and history:
-echo "Initializing a new git repository"
-git init . 
+    echo "Initializing a new git repository"
+    git init .
+fi
 
 
