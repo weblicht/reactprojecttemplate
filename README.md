@@ -13,12 +13,15 @@ To start a custom project based on this template:
 3. run `make init` from the project's root to initialize the project
    files with your project's name
 
-**Warning**: the script to initialize the project directory with a new
-project name is **very destructive** (it renames files, modifies file
-contents, and deletes the .git directory, which means you will not be
-able to recover your previous state) and presently has no safety
-checks.  Do *not* run `make init` or `bin/rename.sh` unless you are
-sure you have no local git history that you wish to save.
+   **Warning**: the script to initialize the project directory with a new
+   project name is **very destructive** (it renames files, modifies file
+   contents, and deletes the .git directory, which means you will not be
+   able to recover your previous state) and presently has no safety
+   checks.  Do *not* run `make init` or `bin/rename.sh` unless you are
+   sure you have no local git history that you wish to save.
+
+4. run `make dependencies` to install web UI dependences; a local
+   `Node.js` installation is expected
 
 ## Development
 
