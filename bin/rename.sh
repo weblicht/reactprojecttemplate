@@ -3,9 +3,6 @@
 NEWNAME=$1 # TODO: use $PWD by default?
 OLDNAME="reactprojecttemplate"
 
-# TODO: check quoting conventions. God help you if you try to run this
-# script from a tree that has spaces in filenames.
-
 if [[ -z $NEWNAME ]]
 then
     echo "Usage: $0 newname"
@@ -21,21 +18,21 @@ then
 fi
 
 # replace the old project name inside project files
-echo "Replacing all instances of $OLDNAME with $NEWNAME inside project files..."
-for F in $(grep --exclude 'Makefile' --exclude '.git*' --exclude "$0" -ir "$OLDNAME" --files-with-matches .)
+echo "Replacing all instances of ${OLDNAME} with ${NEWNAME} inside project files..."
+for F in $(grep --exclude 'Makefile' --exclude '.git*' --exclude "$0" -ir "${OLDNAME}" --files-with-matches .)
 do         
-    echo "in: $F"
-    sed -e "s/$OLDNAME/$NEWNAME/g" -i'~~' "$F" 
-done && find . -name '*~~' -delete # delete sed's backup files if loop completes successfully
+    echo "in: ${F}"
+    sed -e "s/${OLDNAME}/${NEWNAME}/g" -i'~~' "${F}" 
+done && find . -name '*~~' -delete # delete sed's backup files only if loop completes successfully
 echo "Replacements inside project files completed"
 
 # rename the files themselves
 echo "Renaming project files..."
-for F in $(find . -iname "*$OLDNAME*")
+for F in $(find . -iname "*${OLDNAME}*")
 do
-    NEWF=$(echo $F | sed -e "s/$OLDNAME/$NEWNAME/") 
-    echo "Moving $F to $NEWF"
-    mv "$F" "$NEWF"
+    NEWF=$(echo "${F}" | sed -e "s/${OLDNAME}/${NEWNAME}/") 
+    echo "Moving ${F} to ${NEWF}"
+    mv "${F}" "${NEWF}"
 done
 echo "Renaming project files completed"
 
