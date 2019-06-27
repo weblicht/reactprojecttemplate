@@ -9,19 +9,22 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Path("/")
 public class API {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(API.class);
-    private static final String API_VERSION = "0.1.0";
 
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+    Map<String, String> gitProperties;
     private Splitter splitter;
 
-    public API(Splitter splitter) {
+    public API(Map<String, String> gitProperties, Splitter splitter) {
+        this.gitProperties = gitProperties;
         this.splitter = splitter;
     }
 
@@ -29,9 +32,19 @@ public class API {
     @Path("/info")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public Map info() {
-        Map<String, String> info = new HashMap<>();
-        info.put("version", API_VERSION);
-        return info;
+        Map map = new HashMap<String, Object>();
+        map.put("git", gitProperties);
+        map.put("version", gitProperties == null ? null : gitProperties.get("git.build.version"));
+        try {
+            InetAddress host = InetAddress.getLocalHost();
+            map.put("host", new HashMap<String, String>() {{
+                put("ip", host.getHostAddress());
+                put("name", host.getHostName());
+            }});
+        } catch (UnknownHostException e) {
+            // ignore
+        }
+        return map;
     }
 
     @POST

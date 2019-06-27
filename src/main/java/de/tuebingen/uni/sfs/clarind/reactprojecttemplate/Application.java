@@ -13,6 +13,8 @@ import org.eclipse.jetty.server.session.SessionHandler;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 
 public class Application extends io.dropwizard.Application<Configuration> {
 
@@ -28,10 +30,11 @@ public class Application extends io.dropwizard.Application<Configuration> {
         env.getApplicationContext().setErrorHandler(new HttpErrorHandler());
 
         env.jersey().setUrlPattern("/api/*");
-
-        Splitter splitter = new Splitter();
         env.jersey().register(MultiPartFeature.class);
-        env.jersey().register(new API(splitter));
+
+        Map<String, String> gitProperties = GitProperties.load("reactprojecttemplate");
+        Splitter splitter = new Splitter();
+        env.jersey().register(new API(gitProperties, splitter));
 
         env.healthChecks().register("reactprojecttemplate", new AppHealthCheck(splitter));
 
