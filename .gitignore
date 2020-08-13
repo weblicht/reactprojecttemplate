@@ -48,3 +48,6 @@ node_modules
 src/main/resources/webui/bundle.js
 src/main/resources/webui/bundle.js.map
 webui/lib/
+
+# Emacs backup files
+*~
