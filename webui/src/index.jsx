@@ -9,9 +9,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import rootReducers from './actions/reducers';
 import { fetchApiInfo } from './actions/actions';
 
-import { BrowseJobs } from './containers/BrowseJobs';
-import { Job } from './containers/Job';
-import { CreateJob } from  './containers/CreateJob';
+import { Job, BrowseJobs, CreateJob } from './Jobs/component';
 import { HomeContainer } from './containers/HomeContainer';
 import { FooterContainer } from './containers/FooterContainer';
 import { Frame } from './components/Frame';
