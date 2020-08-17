@@ -51,9 +51,7 @@ export function innerJobReducer(state = defaultJobState, action) {
             tokens: undefined
         });
     }
-    case actionTypes.JOB_REMOVE: {
-        return undefined;
-    }
+
     default: {
         return state;
     }
