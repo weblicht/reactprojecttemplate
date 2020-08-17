@@ -70,7 +70,15 @@ export function runJob(originalText) {
         
         dispatch(submitJob(jobId, originalText));
         return axios.post(apiPath.split, { text: originalText })
-              .then(response => dispatch(completeJob(jobId, response.data)))
-              .catch(error => dispatch(errorInJob(jobId, error)));
+            .then(response => dispatch(completeJob(jobId, response.data)))
+            .catch(error => {
+                if (error.response) {
+                    return dispatch(errorInJob(jobId, error.response.data.message));
+                } else if (error.request) {
+                    return dispatch(errorInJob(jobId, "No response received from server."));
+                } else {
+                    return dispatch(errorInJob(jobId, "Could not make request to server."));
+                }
+            });
     }
 }
