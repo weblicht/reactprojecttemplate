@@ -1,4 +1,5 @@
 import { actionTypes } from './actions';
+import { makeByIdReducer } from '../utils/utils';
 
 import SI from 'seamless-immutable';
 
@@ -10,7 +11,7 @@ import SI from 'seamless-immutable';
 // representation, because the job status is implicit in the other
 // fields: a job with originalText but no tokenizedText and no error
 // has been submitted but is not completed; a job with both
-// originalText and tokenizedText completed successfully. It is
+// originalText and tokenizedText has completed successfully. It is
 // usually better to calculate a status message from this information
 // at the point where it is needed, rather than managing a redundant
 // field in the state via Redux.
@@ -56,6 +57,5 @@ export function innerJobReducer(state = defaultJobState, action) {
     }
 }
 
-// TODO: makeByIdReducer
-export const jobs = makeByIdReducer(innerJobReducer);
+export const jobs = makeByIdReducer(innerJobReducer, actionTypes);
 

@@ -21,8 +21,11 @@ export function selectJob(globalState, id) {
 // Returns the next available job id. 
 export function nextJobId(globalState) {
     const jobsState = globalState.jobs || {};
-    const allIds = Object.keys(jobsState); // TODO: filter out non-numerical?
+    const allIds = Object.keys(jobsState)
+                         .map(key => parseInt(key))
+                         .filter(id => id); // remove NaN
+    const nextId = Math.max(ids) + 1;
 
-    return Math.max(ids) + 1;
+    return nextId.toString();
 }
 

@@ -1,16 +1,16 @@
 // actions.js
 // Actions for Jobs
 import { apiPath } from '../constants';
+import { actionTypesFromStrings } from '../utils/utils';
 
 import axios from 'axios';
 
-// TODO: actionTypesFromStrings
-export const actionTypes = {
-    JOB_SUBMITTED: 'JOB_SUBMITTED',
-    JOB_DONE: 'JOB_DONE',
-    JOB_ERROR: 'JOB_ERROR',
-    JOB_REMOVE: 'JOB_REMOVE',
-};
+export const actionTypes = actionTypesFromStrings([
+    'JOB_SUBMITTED',
+    'JOB_DONE',
+    'JOB_ERROR',
+    'JOB_REMOVE',
+]);
 
 // Simple action creators for each stage in the job lifecycle.
 // 
@@ -50,7 +50,7 @@ function removeJob(id) {
 
 function errorInJob(id, error) {
     return {
-        type: actionTypes.JOB_ERROR
+        type: actionTypes.JOB_ERROR,
         id,
         error
     }
@@ -59,15 +59,10 @@ function errorInJob(id, error) {
 // Asynchronous action creator. Manages the whole job lifecycle, from
 // submission to completion, by dispatching the simple actions above.
 //
-// NB: a Redux "asynchronous" action creator returns a thunk: a
-// function that accepts the dispatch function, which it can then use
-// to dispatch simple actions (i.e., objects with a .type). This
-// pattern is supported by the redux-thunk middleware.
-//
-// runJob is a good example of a common Redux pattern: an asynchronous
-// action creator makes an API request and dispatches a series of
-// actions, which indicate each part of the interaction with the API
-// (request, successful response, failure).
+// NB: runJob is a good example of a common Redux pattern: an
+// asynchronous action creator makes an API request and dispatches a
+// series of actions, which indicate each part of the interaction with
+// the API (request, successful response, failure).
 export function runJob(originalText) {
     return function (dispatch, getState) {
         const jobId = nextJobId(getState());
