@@ -8,49 +8,73 @@ import axios from 'axios';
 export const actionTypes = {
     JOB_SUBMITTED: 'JOB_SUBMITTED',
     JOB_DONE: 'JOB_DONE',
+    JOB_ERROR: 'JOB_ERROR',
     JOB_REMOVE: 'JOB_REMOVE',
 };
 
-// TODO: this is not a good idea!
-let JOBID = 1;
+// Simple action creators for each stage in the job lifecycle.
+// 
+// NB: All these functions do is return a Redux action, i.e., an
+// object with a .type field. It may seem like overkill to have a
+// dedicated function for each of these actions, and in this simple
+// application, it probably *is* overkill. But it's good design to
+// provide such functions instead of constructing the actions directly
+// at the point where they are dispatched, because this separates the
+// internal data representation used in actions and reducers from the
+// interface used by external code, allowing them to change
+// independently as the application grows. Also, it reduces the number
+// of curly braces at the point where you dispatch the action, which
+// is always a good thing. ;)
+function submitJob(id, originalText) {
+    return {
+        type: actionTypes.JOB_SUBMITTED,
+        id,
+        originalText
+    };
+}
 
-export function createJob(text) {
-    return function (dispatch, getState)  {
-        const fd = new FormData(); fd.append("text", text);
-        const job = {
-            id: JOBID++,
-            originalText: text,
-            tokenizedText: null,
-            status: 'in progress',
-        };
+function completeJob(id, tokenizedText) {
+    return {
+        type: actionTypes.JOB_DONE,
+        id,
+        tokenizedText
+    };
+}
 
-        dispatch({
-            type: actionTypes.JOB_SUBMITTED,
-            job: job,
-        });
+function removeJob(id) {
+    return {
+        type: actionTypes.JOB_REMOVE,
+        id,
+    };
+}
 
-        axios
-        .post(apiPath.split, fd)
-        .then(response => {
-            job.tokenizedText = response.data;
-            job.status = 'done';
-            dispatch({
-                type: actionTypes.JOB_DONE,
-                job: job,
-            });
-        });
-        //TODO: .catch(errHandler(dispatch, "Cannot create job."));
+function errorInJob(id, error) {
+    return {
+        type: actionTypes.JOB_ERROR
+        id,
+        error
     }
 }
 
-export function removeJobs(jobIDList) {
-    return function (dispatch, getState)  {
-        for (id in jobIDList) {
-            dispatch({
-                type: actionTypes.JOB_REMOVE,
-                id: id,
-            });
-        }
+// Asynchronous action creator. Manages the whole job lifecycle, from
+// submission to completion, by dispatching the simple actions above.
+//
+// NB: a Redux "asynchronous" action creator returns a thunk: a
+// function that accepts the dispatch function, which it can then use
+// to dispatch simple actions (i.e., objects with a .type). This
+// pattern is supported by the redux-thunk middleware.
+//
+// runJob is a good example of a common Redux pattern: an asynchronous
+// action creator makes an API request and dispatches a series of
+// actions, which indicate each part of the interaction with the API
+// (request, successful response, failure).
+export function runJob(originalText) {
+    return function (dispatch, getState) {
+        const jobId = nextJobId(getState());
+        
+        dispatch(submitJob(jobId, originalText));
+        return axios.post(apiPath.split, { text: originalText })
+              .then(response => dispatch(completeJob(jobId, response.data)))
+              .catch(error => dispatch(errorInJob(jobId, error)));
     }
 }
-
