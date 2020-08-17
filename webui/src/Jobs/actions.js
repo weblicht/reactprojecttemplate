@@ -10,7 +10,6 @@ export const actionTypes = actionTypesFromStrings([
     'JOB_SUBMITTED',
     'JOB_DONE',
     'JOB_ERROR',
-    'JOB_REMOVE',
 ]);
 
 // Simple action creators for each stage in the job lifecycle.
@@ -26,7 +25,7 @@ export const actionTypes = actionTypesFromStrings([
 // independently as the application grows. Also, it reduces the number
 // of curly braces at the point where you dispatch the action, which
 // is always a good thing. ;)
-function submitJob(id, originalText) {
+export function submitJob(id, originalText) {
     return {
         type: actionTypes.JOB_SUBMITTED,
         id,
@@ -34,22 +33,15 @@ function submitJob(id, originalText) {
     };
 }
 
-function completeJob(id, tokenizedText) {
+export function completeJob(id, tokens) {
     return {
         type: actionTypes.JOB_DONE,
         id,
-        tokenizedText
+        tokens
     };
 }
 
-function removeJob(id) {
-    return {
-        type: actionTypes.JOB_REMOVE,
-        id,
-    };
-}
-
-function errorInJob(id, error) {
+export function errorInJob(id, error) {
     return {
         type: actionTypes.JOB_ERROR,
         id,
