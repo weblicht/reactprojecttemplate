@@ -18,13 +18,24 @@ export function selectJob(globalState, id) {
     }
 }
 
+// Returns an array of all current jobs
+export function selectAllJobs(globalState) {
+    try {
+        // the final filter removes "dead" jobs that have an ID but no
+        // longer have state from the list:
+        return Object.values(globalState.jobs.byId).filter(job => job);
+    } catch (e) {
+        return []; 
+    }
+}
+
 // Returns the next available job id. 
 export function nextJobId(globalState) {
-    const jobsState = globalState.jobs || {};
+    const jobsState = globalState.jobs.byId || {};
     const allIds = Object.keys(jobsState)
                          .map(key => parseInt(key))
                          .filter(id => id); // remove NaN
-    const nextId = Math.max(ids) + 1;
+    const nextId = Math.max(allIds) + 1;
 
     return nextId.toString();
 }
