@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import rootReducers from './actions/reducers';
 import { fetchApiInfo } from './actions/actions';
 
-import { Job, BrowseJobs, CreateJob } from './Jobs/component';
+import { JobDetail, BrowseJobs, CreateJob } from './Jobs/component';
 import { HomeContainer } from './containers/HomeContainer';
 import { FooterContainer } from './containers/FooterContainer';
 import { Frame } from './components/Frame';
@@ -41,7 +41,7 @@ class App extends React.Component {
                         <Switch>
                             <Route exact path='/jobs' component={BrowseJobs} />
                             <Route exact path='/jobs/new' component={CreateJob} />
-                            <Route exact path='/jobs/:id' component={Job} />
+                            <Route exact path='/jobs/:id' component={JobDetail} />
                             <Route exact path='/' component={HomeContainer} />
                             <Route path='*' component={NotFound} />
                         </Switch>
