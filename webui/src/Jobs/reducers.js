@@ -1,5 +1,6 @@
 import { actionTypes } from './actions';
-import { makeByIdReducer } from '../utils/utils';
+
+import { makeByIdReducer } from  '@sfstuebingen/germanet-common/helpers';
 
 import SI from 'seamless-immutable';
 

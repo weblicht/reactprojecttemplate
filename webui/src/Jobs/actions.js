@@ -1,8 +1,9 @@
 // actions.js
 // Actions for Jobs
 import { apiPath } from '../constants';
-import { actionTypesFromStrings } from '../utils/utils';
+import { nextJobId } from './selectors';
 
+import { actionTypesFromStrings } from '@sfstuebingen/germanet-common/helpers';
 import axios from 'axios';
 
 export const actionTypes = actionTypesFromStrings([
