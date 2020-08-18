@@ -71,8 +71,12 @@ function JobDetail(props) {
         );
     }
 
+
     return (
-        <JobAsCard data={props.data} />
+        <Card title="Job details" level={3}>
+          <JobAsCard data={props.data} />
+          <Link to="/jobs">Back to jobs list</Link>
+        </Card>
     );
 }
 
@@ -98,7 +102,7 @@ function BrowseJobs(props) {
               }
 
               <Link to="/jobs/new">
-                <Button extras="btn-primary">Add Job</Button>
+                <Button extras="btn-primary">Create Job</Button>
               </Link>
             </Card>
         );
