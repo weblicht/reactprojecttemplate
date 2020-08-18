@@ -24,8 +24,6 @@ const middleware = compose(
 );
 const store = createStore(rootReducers, middleware);
 
-// TODO: show alerts when backend fails
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -36,7 +34,7 @@ class App extends React.Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <div style={{ paddingBottom: 70, paddingTop: 5 }}>
+                    <div style={{ paddingBottom: 70, paddingTop: 70 }}>
                         <Route path='/' component={Frame} />
                         <Switch>
                             <Route exact path='/jobs' component={BrowseJobs} />
