@@ -1,13 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import { withRouter, useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { runJob } from './actions';
 import { selectJob, selectAllJobs, nextJobId } from './selectors';
 
 import { Button, Card, List, ListItem, Form, TextInput, SubmitButton } from '@sfstuebingen/germanet-common/components';
-import classNames from 'classnames';
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+// NB: the components in this file exhibit a style that will serve you
+// well: they are all simple, reusable function components. They do
+// not need to keep their own state; instead, all the state in the
+// application is managed via Redux. I recommend you stick to this
+// style as much as possible, because it makes frontend development
+// easier, more flexible, and faster. Also, notice that the
+// germanet-common library provides a lot of low-level components
+// which help simplify the code here (e.g. Card and TextInput). I
+// recommend familiarizing yourself with the components in that
+// library before you build your own.
 
 // Displays a card with information about a single job.
 // props:
@@ -62,15 +71,13 @@ function TokensAsList(props) {
 // Top level component for /jobs/<id>
 // Displays the details about job <id>, or an error message if there is no such job.
 function JobDetail(props) {
-
     if (!props.data) {
         return (
-            <Card title="Job not found" level={5}>
+            <Card title="Job not found" level={3}>
               There is no job with ID {props.match.params.id}
             </Card>
         );
     }
-
 
     return (
         <Card title="Job details" level={3}>
