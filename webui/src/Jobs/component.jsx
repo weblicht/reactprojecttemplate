@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { runJob } from './actions';
-import { selectJob, selectAllJobs } from './selectors';
+import { selectJob, selectAllJobs, nextJobId } from './selectors';
 
-import { Button, Card, List, ListItem } from '@sfstuebingen/germanet-common/components';
+import { Button, Card, List, ListItem, Form, TextInput, SubmitButton } from '@sfstuebingen/germanet-common/components';
 import classNames from 'classnames';
 
 // Displays a card with information about a single job.
@@ -19,9 +19,10 @@ function JobAsCard(props) {
              ? <span className="badge badge-danger">Error</span>
              : <span className="badge badge-warning">Processing...</span>);
 
+    const titleLink = <Link to={"/jobs/" + props.data.id}>Job {props.data.id}</Link>;
          
     return (
-        <Card title={"Job " + props.data.id} level={5}>
+        <Card title={titleLink} level={5}>
           {statusBadge}
           <h6>Original text</h6>
           <p>{props.data.originalText}</p>
@@ -89,20 +90,17 @@ export { JobDetail };
 // Displays a title, the list of jobs, and a button to add a new job.
 function BrowseJobs(props) {
         return (
-            <>
-              <h3>Browse Jobs</h3>
+            <Card title="Browse Jobs" level={3}>
 
               {props.jobs && props.jobs.length
                ? props.jobs.map(job => <JobAsCard key={job.id} data={job} />)
                : <p>No jobs found</p>
               }
 
-              <Card>
-                <Link to="/jobs/new">
-                  <button type="button" className="btn btn-primary">Add Job</button>
-                </Link>
-              </Card>
-            </>
+              <Link to="/jobs/new">
+                <Button extras="btn-primary">Add Job</Button>
+              </Link>
+            </Card>
         );
 }
 
@@ -115,63 +113,52 @@ function browseJobsStateToProps(state) {
 BrowseJobs = connect(browseJobsStateToProps)(BrowseJobs);
 export { BrowseJobs };
 
-class CreateJobComp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onInputText = this.onInputText.bind(this);
-        this.onCreateJob = this.onCreateJob.bind(this);
-        this.state = {
-            text: ''
-        };
+// Top level component for /jobs/new
+// Displays the form to create a new job, including the text to be tokenized and
+// a suggested job ID.
+function CreateJobForm(props) {
+
+    const history = useHistory();
+    function submitJob(formData) {
+        props.runJob(formData);
+
+        // redirect to job detail page:
+        history.push(`/jobs/${formData.jobId}`);
     }
 
-    onInputText(e) {
-        this.setState({ text: e.target.value });
-    }
-
-    onCreateJob(e) {
-        e.preventDefault();
-        this.props.runJob(this.state.text);
-        // send the user to the BrowseJobs page
-        // using the history object from react-router-dom
-        this.props.history.push('/jobs');
-    }
-
-    render() {
-        return (
-            <div>
-                <h3> Create Job </h3>
-                <form>
-                    <div className="form-group">
-                        <label htmlFor="inputText">Insert text here</label>
-
-                        <div className="input-group  mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="inputGroupPrepend">Tokenized Text</span>
-                            </div>
-
-                            <input type="text" className="form-control" id="inputText"  aria-describedby="inputGroupPrepend"
-                                placeholder="Enter text"
-                                value={this.state.text} onChange={this.onInputText} />
-                        </div>
-                    </div>
-
-                    <button type="button" className="btn btn-primary" onClick={this.onCreateJob}> Submit </button>
-                </form>
-            </div>
-        );
-    }
+    return (
+        <Form submitTo={submitJob}>
+          <TextInput name="jobId" label="Job ID"
+                     value={props.suggestedId}
+                     required={true}
+                     readOnly={true}
+                     asGroup={true} />
+          <TextInput name="text" label="Text to tokenize"
+                     required={true}
+                     asGroup={true} />
+          <SubmitButton text="Create job" extras="btn-primary" />
+        </Form>
+    );
 }
 
-const createJobStateToProps = (state) => ({ jobs: state.jobs });
+function stateToCreateJobProps(state) {
+    return {
+        suggestedId: nextJobId(state)
+    };
+}
 
-const createJobDispatchToProps = (dispatch) => ({
-    runJob: (text) => dispatch(runJob(text)),
-});
+function dispatchToCreateJobProps(dispatch) {
+    return {
+        runJob: text => dispatch(runJob(text))
+    };
+}
 
-CreateJobComp.propTypes = {
-    runJob: PropTypes.func.isRequired,
-};
+CreateJobForm = connect(stateToCreateJobProps, dispatchToCreateJobProps)(CreateJobForm);
 
-export const CreateJob = withRouter(connect(createJobStateToProps, createJobDispatchToProps)(CreateJobComp));
-
+export function CreateJob(props) {
+    return (
+        <Card title="Create job" level={3}>
+          <CreateJobForm />
+        </Card>
+    );
+}

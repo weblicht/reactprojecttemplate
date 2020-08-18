@@ -1,7 +1,6 @@
 // actions.js
 // Actions for Jobs
 import { apiPath } from '../constants';
-import { nextJobId } from './selectors';
 
 import { actionTypesFromStrings } from '@sfstuebingen/germanet-common/helpers';
 import axios from 'axios';
@@ -56,12 +55,12 @@ export function errorInJob(id, error) {
 // asynchronous action creator makes an API request and dispatches a
 // series of actions, which indicate each part of the interaction with
 // the API (request, successful response, failure).
-export function runJob(originalText) {
-    return function (dispatch, getState) {
-        const jobId = nextJobId(getState());
+export function runJob(formData) {
+    return function (dispatch) {
+        const {jobId, text} = formData;
         
-        dispatch(submitJob(jobId, originalText));
-        return axios.post(apiPath.split, { text: originalText })
+        dispatch(submitJob(jobId, text));
+        return axios.post(apiPath.split, { text })
             .then(response => dispatch(completeJob(jobId, response.data)))
             .catch(error => {
                 if (error.response) {
