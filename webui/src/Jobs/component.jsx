@@ -95,15 +95,14 @@ export { JobDetail };
 function BrowseJobs(props) {
         return (
             <Card title="Browse Jobs" level={3}>
+              <p>
+                <Link to="/jobs/new">Click here to create a new job.</Link>
+              </p>
 
               {props.jobs && props.jobs.length
                ? props.jobs.map(job => <JobAsCard key={job.id} data={job} />)
-               : <p>No jobs found</p>
+               : <p>No current jobs.</p>
               }
-
-              <Link to="/jobs/new">
-                <Button extras="btn-primary">Create Job</Button>
-              </Link>
             </Card>
         );
 }
