@@ -58,18 +58,7 @@ There are a few other important files here in the `webui` directory:
 
 If you are using this project to learn React and Redux, here are some
 recommended steps:
-
-1. Install the appropriate frontend development tools.  These include:
-
-   - a good text editor that understands Javascript and JSX syntax
-   - the Firefox and Chrome browsers (you should test against both)
-   - the React Developer Tools plugin
-     ([FF](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/),
-     [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi))
-   - the Redux DevTools plugin
-     ([FF](https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/),
-     [Chrome](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd))
-   
+  
 1. Work through the [official React tutorial](https://reactjs.org/tutorial/tutorial.html).
 
 1. Work through the [official Redux tutorial](https://redux.js.org/tutorials/essentials/part-1-overview-concepts).
@@ -81,3 +70,61 @@ recommended steps:
    comments marked `NB:` (for "Notes for beginners"). These help
    explain why the code here is written the way it is.
 
+### Tools
+
+When you are ready to begin developing this code, you should install
+the appropriate frontend development tools. These include:
+
+   - a good text editor that understands Javascript and JSX syntax
+   - the Firefox and Chrome browsers (you should test against both)
+   - the React Developer Tools plugin
+     ([FF](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/),
+     [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi))
+   - the Redux DevTools plugin
+     ([FF](https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/),
+     [Chrome](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd))
+     
+You should also learn to use the developer tools in your browser
+effectively, such as the DOM inspector and JS debugger.
+     
+### Documentation and learning more
+
+Good documentation is essential for writing good code. When you have a
+question, these docs should be the first places you look for the
+answer:
+
+1. [Mozilla Developer Network](https://developer.mozilla.org/en-US/) is
+   the best source of documentation for all web standards.  See
+   especially their core documentation on
+
+   - [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+   - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+   - [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+     (especially the tutorials on [responsive
+     design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
+     and
+     [flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox),
+     which are useful for understanding Bootstrap's CSS)
+   
+   *Tip*: to search this documentation directly with
+   [DuckDuckGo](https://duckduckgo.com/), use their `!mdn` bang.
+
+2. We use [Bootstrap](https://getbootstrap.com/docs/4.3/) as a CSS
+   framework. (We do not use their Javascript components, though.)
+   Essentially all styling is done in the application by adding
+   Bootstrap CSS classes to components. You should become familiar
+   with Bootstrap's CSS utilities. Many of the generic layout
+   components in the `germanet-common` library (e.g. `Card` or
+   `Button`) library are essentially wrappers that provide a nice
+   props interface for using Bootstrap's CSS.
+   
+3. The official documentation for [React](https://reactjs.org/docs/getting-started.html)
+   and [Redux](https://redux.js.org/api/api-reference) should be the
+   first place you look for any information about their APIs. 
+
+There is also a lot of other advice scattered across the web, from
+StackOverflow to random blog posts. It's fine to look at these things
+to get ideas, but they shouldn't be your primary resource as a
+beginner &mdash; there's a lot of bad advice out there, and in the
+Javascript world, even advice that was once good quickly goes out of
+date.
