@@ -81,8 +81,6 @@ export class NavBar extends React.Component {
 
               {/* The hamburger button displayed when the menu collapses: */}
               <Button className="navbar-toggler"
-                      data-toggle="collapse" 
-                      data-target="#navbarSupportedContent"
                       aria-controls="navbarSupportedContent" 
                       aria-expanded="false"
                       aria-label="Toggle navigation" 
