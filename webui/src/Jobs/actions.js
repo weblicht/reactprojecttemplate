@@ -45,7 +45,7 @@ export function errorInJob(id, error) {
         type: actionTypes.JOB_ERROR,
         id,
         error
-    }
+    };
 }
 
 // Asynchronous action creator. Manages the whole job lifecycle, from
