@@ -87,7 +87,7 @@ function JobDetail(props) {
     );
 }
 
-// NB: this is the mapStateToProps function for the JobDetails
+// NB: this is the mapStateToProps function for the JobDetail
 // component; notice that it is passed to connect() below. Since we
 // declare multiple mapStateToProps functions in this file, they have
 // different names, but they are all named like:
