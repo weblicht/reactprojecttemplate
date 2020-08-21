@@ -7,6 +7,15 @@
 // retrieving values directly from the state, because it allows you to
 // more easily re-arrange the application's state model as the
 // application grows.
+//
+// A selector is different from a mapStateToProps function of the sort
+// you pass to connect(). A selector function's job is to get some
+// piece of data *out* of the Redux store. A mapStateToProps
+// function's job is to get some data *into* a component's props.
+// These are distinct roles. For example, consider a component that
+// needs multiple pieces of data from different parts of the store. In
+// that case, you'd call several different selectors inside its
+// mapStateToProps function.
 
 
 // Returns the state of the job with the given id.
