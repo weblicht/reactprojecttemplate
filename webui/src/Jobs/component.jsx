@@ -87,14 +87,20 @@ function JobDetail(props) {
     );
 }
 
-function jobDetailStateToProps(state, ownProps) {
+// NB: this is the mapStateToProps function for the JobDetails
+// component; notice that it is passed to connect() below. Since we
+// declare multiple mapStateToProps functions in this file, they have
+// different names, but they are all named like:
+//   stateTo<Component>Props
+// where <Component> is the name of the component passed to connect().
+function stateToJobDetailProps(state, ownProps) {
     const id = ownProps.match.params.id;
     return {
         data: selectJob(state, id)
     };
 }
 
-JobDetail = withRouter(connect(jobDetailStateToProps)(JobDetail));
+JobDetail = withRouter(connect(stateToJobDetailProps)(JobDetail));
 export { JobDetail };
 
 // Top level component for /jobs
@@ -114,13 +120,13 @@ function BrowseJobs(props) {
         );
 }
 
-function browseJobsStateToProps(state) {
+function stateToBrowseJobsProps(state) {
     return {
         jobs: selectAllJobs(state)
     };
 }
 
-BrowseJobs = connect(browseJobsStateToProps)(BrowseJobs);
+BrowseJobs = connect(stateToBrowseJobsProps)(BrowseJobs);
 export { BrowseJobs };
 
 // Top level component for /jobs/new
@@ -157,6 +163,11 @@ function stateToCreateJobProps(state) {
     };
 }
 
+// NB: this is the mapDispatchToProps function for CreateJob.
+// mapDispatchToProps functions are named like:
+//   dispatchTo<Component>Props
+// for the same reason that mapStateToProps functions have different names.
+// See comment above.
 function dispatchToCreateJobProps(dispatch) {
     return {
         runJob: text => dispatch(runJob(text))
