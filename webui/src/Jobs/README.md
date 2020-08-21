@@ -6,18 +6,31 @@ tokenize a simple text input.
 
 Data flows through the feature in a standard way:
 
-1. The user creates a job by submitting a form with some text to
-   be processed.
-2. The `runJob` action dispatches Redux actions which create the state
-   for the new job in the Redux store, submit the job to the server,
-   and update the job state with the results when the server responds.
-3. The state of all jobs is managed via Redux. The `jobs` reducer
+1. The user creates a job by filling out a form with some text to
+   be processed and clicking its submit button.
+1. When the form is submitted, the `submitJob` callback function in
+   the `CreateJobForm` component is called with the form's data.
+   (Gathering the form's data from the DOM into the `formData` object
+   passed to `submitJob` is handled by the `Form` component.) This
+   callback dispatches the `runJob` action.
+1. The `runJob` action is responsible for managing the whole
+   request-response cycle that corresponds to running one job. It
+   dispatches Redux actions which create the state for the new job in
+   the Redux store, it submits the job to the server, and it
+   dispatches actions to update the job state with the results after
+   the server responds.
+1. The state of all jobs is managed via Redux. The `jobs` reducer
    handles the different actions dispatched within `runJob` to update
-   this state.
-4. Different parts of this state can be retrieved via selector
-   functions like `selectJob`. Components get access to this state via
-   react-redux's `connect` function. Whenever the Redux state changes,
-   these components re-render, updating the user interface.
+   this state. This includes creating a new part of the state when a
+   new job is submitted, recording the results when the job finishes,
+   and recording an error message if something goes wrong.
+1. Various components (e.g. `BrowseJobs`, `JobDetail`) get access to
+   this state via react-redux's `connect` function. Whenever the Redux
+   state changes, these components re-render, updating the user
+   interface. Each of these components has a mapStateToProps function
+   called `stateTo[Component]Props`. These mapStateToProps functions
+   in turn call various *selector* functions to retrieve the piece(s)
+   of state which they inject into the component's props.
    
 ## Components defined here
 
