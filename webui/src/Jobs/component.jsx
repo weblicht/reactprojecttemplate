@@ -93,6 +93,13 @@ function JobDetail(props) {
 // different names, but they are all named like:
 //   stateTo<Component>Props
 // where <Component> is the name of the component passed to connect().
+//
+// When this function is called, state contains the Redux store state,
+// and ownProps contains the props given to the component where it was
+// instantiated. In this case, ownProps is important because it
+// contains the id forwarded to the component from the URL by
+// react-router. For more see:
+// https://react-redux.js.org/using-react-redux/connect-mapstate
 function stateToJobDetailProps(state, ownProps) {
     const id = ownProps.match.params.id;
     return {
@@ -100,6 +107,10 @@ function stateToJobDetailProps(state, ownProps) {
     };
 }
 
+// NB: the react-router withRouter() function, like react-redux's
+// connect(), wraps the component with another that passes routing
+// information down as props.  For more see:
+// https://reactrouter.com/web/api/withRouter
 JobDetail = withRouter(connect(stateToJobDetailProps)(JobDetail));
 export { JobDetail };
 
