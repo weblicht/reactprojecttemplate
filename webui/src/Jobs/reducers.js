@@ -1,6 +1,6 @@
 import { actionTypes } from './actions';
 
-import { makeByIdReducer } from  '@sfstuebingen/germanet-common/helpers';
+import { makeByIdReducer } from  '@sfstuebingen/curb/helpers';
 
 import SI from 'seamless-immutable';
 
@@ -78,7 +78,7 @@ const defaultJobsState = SI({
 // job, and the jobs function below, which handles storing and
 // updating the state for all jobs, indexed by ID.
 //
-// There is a helper function in germanet-common, makeByIdReducer,
+// There is a helper function in curb, makeByIdReducer,
 // which can create reducers that implement this pattern. Using that
 // helper, the jobs() reducer could instead be expressed in one line:
 // 

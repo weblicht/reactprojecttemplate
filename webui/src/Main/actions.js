@@ -1,9 +1,9 @@
 import { apiPath } from '../constants';
 
-import { actionTypesFromStrings } from '@sfstuebingen/germanet-common/helpers';
+import { makeActionTypes } from '@sfstuebingen/curb/helpers';
 import axios from 'axios';
 
-export const actionTypes = actionTypesFromStrings([
+export const actionTypes = makeActionTypes([
     'APIINFO_FETCH_SUCCESS',
 ]);
 

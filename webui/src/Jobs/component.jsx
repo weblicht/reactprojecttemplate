@@ -1,7 +1,7 @@
 import { runJob } from './actions';
 import { selectJob, selectAllJobs, nextJobId } from './selectors';
 
-import { Button, Card, List, ListItem, Form, TextInput, SubmitButton } from '@sfstuebingen/germanet-common/components';
+import { Button, Badge, Card, List, ListItem, Form, TextInput, SubmitButton } from '@sfstuebingen/curb/components';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, useHistory } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 // application is managed via Redux. I recommend you stick to this
 // style as much as possible, because it makes frontend development
 // easier, more flexible, and faster. Also, notice that the
-// germanet-common library provides a lot of low-level components
+// curb library provides a lot of low-level components
 // which help simplify the code here (e.g. Card and TextInput). I
 // recommend familiarizing yourself with the components in that
 // library before you build your own.
@@ -23,10 +23,10 @@ import { Link } from 'react-router-dom';
 //   data: Object representing a job
 function JobAsCard(props) {
     const statusBadge = props.data.tokens
-          ? <span className="badge badge-success">Completed</span>
+          ? <Badge type="success">Completed</Badge>
           : (props.data.error
-             ? <span className="badge badge-danger">Error</span>
-             : <span className="badge badge-warning">Processing...</span>);
+             ? <Badge type="danger">Error</Badge>
+             : <Badge type="warning">Processing...</Badge>);
 
     const titleLink = <Link to={"/jobs/" + props.data.id}>Job {props.data.id}</Link>;
          

@@ -3,7 +3,7 @@ import { fetchApiInfo } from './actions';
 import { selectVersion } from './selectors';
 import { JobDetail, BrowseJobs, CreateJob } from '../Jobs/component';
 
-import { Button, Card, CardHeader, CardFooter } from '@sfstuebingen/germanet-common/components';
+import { Button, Card, CardHeader, CardFooter } from '@sfstuebingen/curb/components';
 
 import React from 'react';
 import { connect } from 'react-redux';

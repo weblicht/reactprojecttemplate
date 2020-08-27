@@ -63,8 +63,9 @@ recommended steps:
 
 1. Work through the [official Redux tutorial](https://redux.js.org/tutorials/essentials/part-1-overview-concepts).
 
-1. Read the documentation and components in
-   [germanet-common](https://weblicht.sfs.uni-tuebingen.de/gitlab/germanet/germanet-common).
+1. Read the documentation and components in the
+   [curb](https://weblicht.sfs.uni-tuebingen.de/gitlab/clarind/libraries/curb)
+   library.
 
 1. Read through the code in this project. Look in particular at
    comments marked `NB:` (for "Notes for beginners"). These help
@@ -114,9 +115,9 @@ answer:
    Essentially all styling is done in the application by adding
    Bootstrap CSS classes to components. You should become familiar
    with Bootstrap's CSS utilities. Many of the generic layout
-   components in the `germanet-common` library (e.g. `Card` or
-   `Button`) library are essentially wrappers that provide a nice
-   props interface for using Bootstrap's CSS.
+   components in the `curb` library (e.g. `Card` or `Button`) library
+   are essentially wrappers that provide a nice props interface for
+   using Bootstrap's CSS.
    
 3. The official documentation for [React](https://reactjs.org/docs/getting-started.html)
    and [Redux](https://redux.js.org/api/api-reference) should be the
