@@ -2,7 +2,8 @@
 
 This directory contains the frontend code for a sample web application
 built with React and Redux. You can study this application to see how
-to build such an application.
+to build such an application, and use it as a template for new
+projects.
 
 ## Code organization
 
@@ -12,7 +13,7 @@ The actual frontend code is in the `src` directory. The
 for building the frontend application.
 
 Within the `src` directory, each logical unit of the application has
-its own folder. Let's call these logical units *features* in the
+its own subdirectory. Let's call these logical units *features* in the
 application.  In this sample application, the two features are:
 
   - `Jobs`: an example feature for creating batch processing jobs.
@@ -115,9 +116,9 @@ answer:
    Essentially all styling is done in the application by adding
    Bootstrap CSS classes to components. You should become familiar
    with Bootstrap's CSS utilities. Many of the generic layout
-   components in the `curb` library (e.g. `Card` or `Button`) library
-   are essentially wrappers that provide a nice props interface for
-   using Bootstrap's CSS.
+   components in the `curb` library (e.g. `Card` or `Button`) are
+   essentially wrappers that provide a nice props interface for using
+   Bootstrap's CSS.
    
 3. The official documentation for [React](https://reactjs.org/docs/getting-started.html)
    and [Redux](https://redux.js.org/api/api-reference) should be the
