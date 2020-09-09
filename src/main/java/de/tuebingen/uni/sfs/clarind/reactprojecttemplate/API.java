@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,11 +50,14 @@ public class API {
 
     @POST
     @Path("/split")
-    @Consumes(MediaType.MULTIPART_FORM_DATA + ";charset=utf-8")
+    @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public Response split(@FormDataParam("text") String text) {
+    public Response split(Map<String, String> formData) {
+       
         try {
+            String text = formData.get("text");
             String[] tokens = splitter.split(text);
+            
             Thread.sleep(10*1000);
             return Response.ok(tokens).build();
         } catch (Exception ex) {
